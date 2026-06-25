@@ -4,7 +4,7 @@ interface Props {
   onBack: () => void;
 }
 
-export default function AboutPage({ onBack }: Props) {
+export default function AboutPage({ onBack: _onBack }: Props) {
   const [visible, setVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 

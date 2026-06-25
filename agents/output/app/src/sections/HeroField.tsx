@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { heroConfig, galleryConfig } from '../config';
+import { heroConfig } from '../config';
 
 // Floating thumbnail data — 6 dedicated hero images
 const FLOATING_THUMBS = [
@@ -249,7 +249,7 @@ export default function HeroField({ onNavigateToGallery }: HeroFieldProps = {}) 
             justifyContent: 'center',
           }}
         >
-          {features.map((feature, i) => (
+          {features.map((feature) => (
             <span key={feature} style={{ display: 'flex', alignItems: 'center' }}>
               <span className="feature-pill">
                 {feature}

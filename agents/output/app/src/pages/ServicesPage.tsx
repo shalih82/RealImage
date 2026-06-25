@@ -294,7 +294,7 @@ function AdminButton({
   );
 }
 
-export default function ServicesPage({ onBack, onContact }: Props) {
+export default function ServicesPage({ onBack: _onBack, onContact }: Props) {
   const cfg = servicesPageConfig;
   const { isAdmin } = useAdmin();
   const { services, addService, updateService, deleteService, reorderService, resetToDefaults } =

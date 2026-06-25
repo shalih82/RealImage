@@ -176,7 +176,7 @@ export default function MediumsGlossary() {
       ease: 'none',
       repeat: -1,
       modifiers: {
-        x: gsap.utils.unitize((x: number) => {
+        x: gsap.utils.unitize((x: string) => {
           // Wrap seamlessly
           return parseFloat(x) % halfWidth;
         }),

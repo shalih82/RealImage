@@ -198,6 +198,7 @@ interface NewAlbumModalProps {
 function NewAlbumModal({ onSave, onClose }: NewAlbumModalProps) {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
+  const [hovered, setHovered] = useState(false);
 
   const inputStyle: React.CSSProperties = {
     width: '100%', padding: '12px 16px',

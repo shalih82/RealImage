@@ -130,6 +130,13 @@ export interface ContactPageConfig {
   }
 }
 
+export interface PhilosophyConfig {
+  eyebrow: string
+  title: string
+  body: string
+  rollingWords: string[]
+}
+
 export const siteConfig: SiteConfig = {
   language: "en",
   siteTitle: "RealImage Photography | Wedding Photography & Films",
@@ -449,6 +456,22 @@ export const servicesPageConfig: ServicesPageConfig = {
     buttonText: "Get In Touch",
   },
 }
+
+export const philosophyConfig: PhilosophyConfig = {
+  eyebrow: "OUR PHILOSOPHY",
+  title: "Creating emotional visual stories",
+  body: "A handcrafted approach to every wedding story, crafted with care, emotion and cinematic detail.",
+  rollingWords: [
+    "Love",
+    "Light",
+    "Motion",
+    "Emotion",
+    "Story",
+    "Memory",
+    "Legacy",
+    "Connection",
+  ],
+};
 
 export const contactPageConfig: ContactPageConfig = {
   eyebrow: "GET IN TOUCH",

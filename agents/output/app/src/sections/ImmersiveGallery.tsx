@@ -203,7 +203,7 @@ export default function ImmersiveGallery({ onSelect }: Props) {
       ease: 'none',
       repeat: -1,
       modifiers: {
-        x: gsap.utils.unitize((x: number) => {
+        x: gsap.utils.unitize((x: string) => {
           return parseFloat(x) % halfWidth;
         }),
       },
