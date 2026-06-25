@@ -124,6 +124,7 @@ export interface ContactPageConfig {
   details: ContactDetail[]
   serviceOptions: SelectOption[]
   budgetOptions: SelectOption[]
+  webhookUrl?: string
   successMessage: {
     title: string
     body: string
@@ -506,6 +507,9 @@ export const contactPageConfig: ContactPageConfig = {
     title: "Message Received!",
     body: "Thank you for reaching out. We'll review your enquiry and get back to you within 24 hours to discuss your vision.",
   },
+  // Optional: set to a webhook or serverless endpoint so submissions are forwarded
+  // e.g. Vite env: VITE_ENQUIRY_WEBHOOK and referenced via import.meta.env.VITE_ENQUIRY_WEBHOOK
+  webhookUrl: "",
 }
 
 export function getProjectById(id: string): ProjectData | undefined {

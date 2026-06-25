@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 import { contactPageConfig } from '../config';
+import { isSupabaseConfigured, sendToSupabase, fetchFromSupabase } from '../lib/enquiries';
 import { useAdmin } from '../hooks/useAdmin';
 
 interface Props {
@@ -233,8 +234,38 @@ function ExportButton() {
 
 // ─── Enquiries View (Admin) ─────────────────────────────────────────────────────
 function EnquiriesView({ onBack }: { onBack: () => void }) {
-  const submissions = loadSubmissions();
+  const [submissions, setSubmissions] = useState<Submission[]>([])
+
   
+
+  useEffect(() => {
+    let mounted = true
+    async function load() {
+      if (isSupabaseConfigured()) {
+        const rows: any[] = await fetchFromSupabase()
+        if (!mounted) return
+        // map supabase rows to Submission shape when possible
+        const mapped = rows.map((r) => ({
+          id: r.client_id ?? r.id ?? String(Date.now()),
+          submittedAt: r.submitted_at ?? new Date().toLocaleString('en-IN'),
+          name: r.name ?? (r.raw?.name || ''),
+          email: r.email ?? (r.raw?.email || ''),
+          phone: r.phone ?? (r.raw?.phone || ''),
+          weddingDate: r.wedding_date ?? (r.raw?.weddingDate || ''),
+          venue: r.venue ?? (r.raw?.venue || ''),
+          serviceType: r.service_type ?? (r.raw?.serviceType || ''),
+          budget: r.budget ?? (r.raw?.budget || ''),
+          message: r.message ?? (r.raw?.message || ''),
+        }))
+        setSubmissions(mapped)
+      } else {
+        setSubmissions(loadSubmissions())
+      }
+    }
+    load()
+    return () => { mounted = false }
+  }, [])
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', maxHeight: '70vh' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
@@ -329,8 +360,40 @@ export default function ContactPage({ onBack }: Props) {
     e.preventDefault();
     setFormStatus('submitting');
     setTimeout(() => {
-      saveSubmission(formData);
+      const saved = saveSubmission(formData);
       setSubmissionCount(loadSubmissions().length);
+
+      // If a webhook is configured (via Vite env or config), forward the submission
+      const webhook = import.meta.env.VITE_ENQUIRY_WEBHOOK || (contactPageConfig as any).webhookUrl;
+      if (webhook) {
+        try {
+          fetch(webhook, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(saved),
+          }).catch((err) => {
+            console.warn('Failed to forward enquiry to webhook:', err);
+          });
+        } catch (err) {
+          console.warn('Failed to forward enquiry to webhook:', err);
+        }
+      }
+
+      // If Supabase is configured, also persist there (non-blocking)
+      const useServerless = import.meta.env.VITE_USE_SERVERLESS === 'true'
+      if (useServerless) {
+        // Post to our serverless endpoint which uses a Supabase service key
+        const apiUrl = '/api/enquiries'
+        fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(saved) })
+          .catch((err) => console.warn('Serverless forward failed', err))
+      } else if (isSupabaseConfigured()) {
+        try {
+          sendToSupabase(saved).catch((err) => console.warn('Supabase send failed', err));
+        } catch (err) {
+          console.warn('Supabase send failed', err);
+        }
+      }
+
       setFormStatus('success');
     }, 1200);
   };
