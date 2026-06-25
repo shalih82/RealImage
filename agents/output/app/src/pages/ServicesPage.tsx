@@ -83,39 +83,76 @@ function ServiceCard({
       />
 
       <div style={{ display: 'flex', gap: '6vw', alignItems: 'flex-start' }}>
-        {/* Left: icon + title */}
+        {/* Left: icon/image + title */}
         <div style={{ flex: '0 0 38%' }}>
-          <div
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: '12px',
-              background: hovered
-                ? 'linear-gradient(135deg, rgba(91,164,181,0.2), rgba(239,191,4,0.2))'
-                : 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: '20px',
-              transition: 'background 0.4s ease, border 0.4s ease',
-            }}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              width="20"
-              height="20"
-              fill="none"
-              stroke={hovered ? '#5BA4B5' : 'rgba(214,232,238,0.7)'}
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{ transition: 'stroke 0.4s ease', display: 'block' }}
+          {service.image ? (
+            <div
+              style={{
+                width: '100%',
+                aspectRatio: '16/9',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                marginBottom: '20px',
+                border: '1px solid rgba(255,255,255,0.08)',
+                position: 'relative',
+              }}
             >
-              <path d={service.icon} />
-            </svg>
+              <img
+                src={service.image}
+                alt={service.title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  transform: hovered ? 'scale(1.05)' : 'scale(1)',
+                  transition: 'transform 0.8s ease',
+                }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: hovered ? 'rgba(91,164,181,0.1)' : 'transparent',
+                  transition: 'background 0.4s ease',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: '12px',
+                background: hovered
+                  ? 'linear-gradient(135deg, rgba(91,164,181,0.2), rgba(239,191,4,0.2))'
+                  : 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '20px',
+                transition: 'background 0.4s ease, border 0.4s ease',
+              }}
+            >
+              {service.icon && (
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke={hovered ? '#5BA4B5' : 'rgba(214,232,238,0.7)'}
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ transition: 'stroke 0.4s ease', display: 'block' }}
+                >
+                  <path d={service.icon} />
+                </svg>
+              )}
+            </div>
+          )}
 
-          </div>
           <h3
             className="font-serif-display"
             style={{
@@ -144,7 +181,7 @@ function ServiceCard({
           </span>
         </div>
 
-        {/* Right: description + features + price */}
+        {/* Right: description + features */}
         <div
           style={{
             flex: 1,
@@ -192,31 +229,6 @@ function ServiceCard({
               </span>
             ))}
           </div>
-
-          {service.startingPrice && (
-            <p
-              className="font-sans-body"
-              style={{
-                fontSize: '13px',
-                letterSpacing: '0.15em',
-                color: hovered ? 'rgba(237,232,228,0.6)' : 'rgba(237,232,228,0.3)',
-                textTransform: 'uppercase',
-                transition: 'color 0.4s ease',
-              }}
-            >
-              Starting from{' '}
-              <span
-                style={{
-                  color: hovered ? '#5BA4B5' : 'rgba(214,232,238,0.3)',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  transition: 'color 0.4s ease',
-                }}
-              >
-                {service.startingPrice}
-              </span>
-            </p>
-          )}
         </div>
       </div>
 

@@ -52,76 +52,28 @@ export default function AboutPage({ onBack: _onBack }: Props) {
         }}
       />
 
-      {/* Hero Section with Image */}
+      {/* Hero Section with Background Image */}
       <div
         style={{
-          padding: '10vh 8vw 0',
-          paddingTop: 'calc(72px + 8vh)',
+          position: 'relative',
+          padding: '12vh 8vw 10vh',
+          paddingTop: 'calc(72px + 12vh)',
+          minHeight: '70vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          overflow: 'hidden',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(30px)',
-          transition: 'opacity 0.8s ease, transform 0.8s ease',
+          transition: 'opacity 1s ease, transform 1s ease',
         }}
       >
-        <p
-          className="font-sans-body"
-          style={{
-            fontSize: '11px',
-            letterSpacing: '0.35em',
-            color: '#5BA4B5',
-            textTransform: 'uppercase',
-            marginBottom: '28px',
-          }}
-        >
-          ABOUT US
-        </p>
-        <h1
-          className="font-serif-display"
-          style={{
-            fontSize: 'clamp(42px, 6vw, 96px)',
-            fontWeight: 200,
-            letterSpacing: '0.04em',
-            lineHeight: 1.05,
-            margin: 0,
-            marginBottom: '32px',
-            background: 'linear-gradient(135deg, #D6E8EE 0%, rgba(214,232,238,0.55) 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
-        >
-          Our Story
-        </h1>
-        <p
-          className="font-sans-body"
-          style={{
-            fontSize: 'clamp(15px, 1.4vw, 18px)',
-            lineHeight: 1.8,
-            color: 'rgba(214,232,238,0.5)',
-            maxWidth: '580px',
-            fontWeight: 300,
-          }}
-        >
-          A legacy of creative photography, built on passion and trust.
-        </p>
-      </div>
-
-      {/* Hero Image Banner */}
-      <div
-        style={{
-          padding: '5vh 8vw 6vh',
-          opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(20px)',
-          transition: 'opacity 1s ease 0.15s, transform 1s ease 0.15s',
-        }}
-      >
+        {/* Background Image */}
         <div
           style={{
-            position: 'relative',
-            width: '100%',
-            height: 'clamp(250px, 40vw, 480px)',
-            borderRadius: '16px',
-            overflow: 'hidden',
-            border: '1px solid rgba(255,255,255,0.06)',
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
           }}
         >
           <img
@@ -135,31 +87,102 @@ export default function AboutPage({ onBack: _onBack }: Props) {
               display: 'block',
             }}
           />
-          {/* Gradient overlay */}
+          {/* Gradient overlay for readability */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to top, rgba(6,20,31,0.8) 0%, rgba(6,20,31,0.1) 40%, transparent 100%)',
+              background: 'linear-gradient(to right, rgba(6,20,31,0.95) 0%, rgba(6,20,31,0.7) 50%, rgba(6,20,31,0.3) 100%)',
               pointerEvents: 'none',
             }}
           />
+          {/* Bottom gradient to blend into next section */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(135deg, rgba(91,164,181,0.08) 0%, transparent 50%, rgba(239,191,4,0.08) 100%)',
+              background: 'linear-gradient(to top, rgba(6,20,31,1) 0%, transparent 30%)',
               pointerEvents: 'none',
             }}
           />
-          {/* Overlay text */}
+          {/* subtle accent gradient */}
           <div
             style={{
               position: 'absolute',
-              bottom: '32px',
-              left: '36px',
+              inset: 0,
+              background: 'linear-gradient(135deg, rgba(91,164,181,0.1) 0%, transparent 50%, rgba(239,191,4,0.1) 100%)',
+              pointerEvents: 'none',
+            }}
+          />
+        </div>
+
+        {/* Content Overlay */}
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            maxWidth: '820px',
+          }}
+        >
+          <p
+            className="font-sans-body"
+            style={{
+              fontSize: '11px',
+              letterSpacing: '0.35em',
+              color: '#5BA4B5',
+              textTransform: 'uppercase',
+              marginBottom: '28px',
             }}
           >
+            ABOUT US
+          </p>
+          <h1
+            className="font-serif-display"
+            style={{
+              fontSize: 'clamp(42px, 6vw, 96px)',
+              fontWeight: 200,
+              letterSpacing: '0.04em',
+              lineHeight: 1.05,
+              margin: 0,
+              marginBottom: '32px',
+              background: 'linear-gradient(135deg, #D6E8EE 0%, rgba(214,232,238,0.55) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            Our Story
+          </h1>
+          <p
+            className="font-sans-body"
+            style={{
+              fontSize: 'clamp(15px, 1.4vw, 18px)',
+              lineHeight: 1.8,
+              color: 'rgba(214,232,238,0.5)',
+              maxWidth: '580px',
+              fontWeight: 300,
+            }}
+          >
+            A legacy of creative photography, built on passion and trust.
+          </p>
+          <p
+            className="font-sans-body"
+            style={{
+              fontSize: 'clamp(16px, 1.5vw, 20px)',
+              lineHeight: 2,
+              color: 'rgba(214,232,238,0.7)',
+              fontWeight: 300,
+              marginTop: '32px',
+              maxWidth: '820px',
+            }}
+          >
+            For over 15 years, RealImage Photography has been capturing life's most meaningful
+            moments through creative and professional photography. What started as a passion for
+            storytelling through images has grown into a trusted photography business dedicated to
+            delivering memories that last a lifetime.
+          </p>
+          
+          <div style={{ marginTop: '48px' }}>
             <span
               className="font-sans-body"
               style={{
@@ -167,6 +190,12 @@ export default function AboutPage({ onBack: _onBack }: Props) {
                 letterSpacing: '0.3em',
                 color: 'rgba(214,232,238,0.6)',
                 textTransform: 'uppercase',
+                display: 'inline-block',
+                padding: '8px 16px',
+                border: '1px solid rgba(255,255,255,0.06)',
+                borderRadius: '24px',
+                background: 'rgba(6,20,31,0.5)',
+                backdropFilter: 'blur(4px)',
               }}
             >
               Since 2010 · Madurai, India
@@ -233,57 +262,12 @@ export default function AboutPage({ onBack: _onBack }: Props) {
       {/* Main Content with Image */}
       <div
         style={{
-          padding: '6vh 8vw 4vh',
+          padding: '2vh 8vw 4vh',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(30px)',
           transition: 'opacity 1s ease 0.4s, transform 1s ease 0.4s',
         }}
       >
-        {/* Intro paragraph */}
-        <div
-          style={{
-            maxWidth: '820px',
-            marginBottom: '6vh',
-            padding: '40px 0',
-            borderTop: '1px solid rgba(255,255,255,0.08)',
-          }}
-        >
-          <p
-            className="font-sans-body"
-            style={{
-              fontSize: 'clamp(16px, 1.5vw, 20px)',
-              lineHeight: 2,
-              color: 'rgba(214,232,238,0.7)',
-              fontWeight: 300,
-            }}
-          >
-            For over 15 years, RealImage Photography has been capturing life's most meaningful
-            moments through creative and professional photography. What started as a passion for
-            storytelling through images has grown into a trusted photography business dedicated to
-            delivering memories that last a lifetime.
-          </p>
-        </div>
-
-        {/* Two-image mosaic */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '16px',
-            marginBottom: '6vh',
-          }}
-        >
-          <ImageCard
-            src="images/project-11.jpg"
-            alt="Traditional wedding ceremony"
-            caption="Traditional Ceremonies"
-          />
-          <ImageCard
-            src="images/project-12.jfif"
-            alt="Candid wedding moments"
-            caption="Candid Moments"
-          />
-        </div>
 
         {/* Content blocks */}
         {[
@@ -310,20 +294,26 @@ export default function AboutPage({ onBack: _onBack }: Props) {
       {/* Full width image with tagline */}
       <div
         style={{
-          padding: '2vh 8vw 4vh',
+          position: 'relative',
+          width: '100%',
+          minHeight: '60vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: '6vh',
+          marginBottom: '6vh',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(20px)',
           transition: 'opacity 1.2s ease 0.55s, transform 1.2s ease 0.55s',
+          overflow: 'hidden',
         }}
       >
         <div
           style={{
-            position: 'relative',
-            width: '100%',
-            height: 'clamp(200px, 30vw, 360px)',
-            borderRadius: '16px',
-            overflow: 'hidden',
-            border: '1px solid rgba(255,255,255,0.06)',
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
           }}
         >
           <img
@@ -335,14 +325,14 @@ export default function AboutPage({ onBack: _onBack }: Props) {
               objectFit: 'cover',
               objectPosition: 'center 40%',
               display: 'block',
-              filter: 'brightness(0.7)',
             }}
           />
+          {/* Overlay to make text pop */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to right, rgba(6,20,31,0.7) 0%, rgba(6,20,31,0.3) 50%, rgba(6,20,31,0.5) 100%)',
+              background: 'linear-gradient(to right, rgba(6,20,31,0.9) 0%, rgba(6,20,31,0.2) 50%, rgba(6,20,31,0.9) 100%)',
               pointerEvents: 'none',
             }}
           />
@@ -350,95 +340,88 @@ export default function AboutPage({ onBack: _onBack }: Props) {
             style={{
               position: 'absolute',
               inset: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '24px',
+              background: 'radial-gradient(circle at center, transparent 0%, rgba(6,20,31,0.85) 100%)',
+              pointerEvents: 'none',
             }}
-          >
-            <p
-              className="font-serif-display"
-              style={{
-                fontSize: 'clamp(18px, 2.5vw, 30px)',
-                fontWeight: 200,
-                letterSpacing: '0.08em',
-                color: 'rgba(214,232,238,0.9)',
-                textAlign: 'center',
-                margin: 0,
-                textShadow: '0 2px 20px rgba(0,0,0,0.5)',
-              }}
-            >
-              "Every frame we capture is a piece of your story"
-            </p>
-          </div>
+          />
         </div>
-      </div>
 
-      {/* Tagline Section */}
-      <div
-        style={{
-          padding: '6vh 8vw 4vh',
-          textAlign: 'center',
-          opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(30px)',
-          transition: 'opacity 1.2s ease 0.6s, transform 1.2s ease 0.6s',
-        }}
-      >
         <div
           style={{
-            margin: '0 auto',
-            maxWidth: '700px',
-            padding: '56px 6vw',
-            background: 'linear-gradient(135deg, rgba(91,164,181,0.07) 0%, rgba(239,191,4,0.07) 100%)',
-            border: '1px solid rgba(91,164,181,0.15)',
-            borderRadius: '20px',
+            position: 'relative',
+            zIndex: 1,
+            padding: '40px 8vw',
+            textAlign: 'center',
           }}
         >
           <p
             className="font-serif-display"
             style={{
-              fontSize: 'clamp(20px, 2.5vw, 32px)',
-              fontWeight: 200,
-              letterSpacing: '0.06em',
-              lineHeight: 1.6,
-              color: '#D6E8EE',
+              fontSize: 'clamp(24px, 3.5vw, 48px)',
+              fontWeight: 400,
+              letterSpacing: '0.05em',
+              color: '#EFBF04',
+              textAlign: 'center',
               margin: 0,
-              marginBottom: '8px',
+              textShadow: '0 4px 30px rgba(0,0,0,0.9), 0 2px 10px rgba(0,0,0,0.8)',
             }}
           >
-            Capturing Moments.
+            "Every frame we capture is a piece of your story"
           </p>
-          <p
-            className="font-serif-display"
+
+          <div
             style={{
-              fontSize: 'clamp(20px, 2.5vw, 32px)',
-              fontWeight: 200,
-              letterSpacing: '0.06em',
-              lineHeight: 1.6,
-              background: 'linear-gradient(90deg, #5BA4B5, #EFBF04)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              margin: 0,
-              marginBottom: '8px',
+              marginTop: '40px',
+              paddingTop: '32px',
+              borderTop: '1px solid rgba(255,255,255,0.1)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
             }}
           >
-            Preserving Memories.
-          </p>
-          <p
-            className="font-serif-display"
-            style={{
-              fontSize: 'clamp(20px, 2.5vw, 32px)',
-              fontWeight: 200,
-              letterSpacing: '0.06em',
-              lineHeight: 1.6,
-              color: '#D6E8EE',
-              margin: 0,
-            }}
-          >
-            Creating Stories.
-          </p>
+            <p
+              className="font-serif-display"
+              style={{
+                fontSize: 'clamp(20px, 2.5vw, 32px)',
+                fontWeight: 200,
+                letterSpacing: '0.06em',
+                lineHeight: 1.6,
+                color: '#FFFFFF',
+                margin: 0,
+                textShadow: '0 4px 20px rgba(0,0,0,0.9), 0 2px 10px rgba(0,0,0,0.8)',
+              }}
+            >
+              Capturing Moments.
+            </p>
+            <p
+              className="font-serif-display"
+              style={{
+                fontSize: 'clamp(20px, 2.5vw, 32px)',
+                fontWeight: 300,
+                letterSpacing: '0.06em',
+                lineHeight: 1.6,
+                color: '#EFBF04',
+                margin: 0,
+                textShadow: '0 4px 20px rgba(0,0,0,0.9), 0 2px 10px rgba(0,0,0,0.8)',
+              }}
+            >
+              Preserving Memories.
+            </p>
+            <p
+              className="font-serif-display"
+              style={{
+                fontSize: 'clamp(20px, 2.5vw, 32px)',
+                fontWeight: 200,
+                letterSpacing: '0.06em',
+                lineHeight: 1.6,
+                color: '#FFFFFF',
+                margin: 0,
+                textShadow: '0 4px 20px rgba(0,0,0,0.9), 0 2px 10px rgba(0,0,0,0.8)',
+              }}
+            >
+              Creating Stories.
+            </p>
+          </div>
         </div>
       </div>
 
