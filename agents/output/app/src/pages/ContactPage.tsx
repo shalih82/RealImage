@@ -380,13 +380,7 @@ export default function ContactPage({ onBack }: Props) {
       }
 
       // If Supabase is configured, also persist there (non-blocking)
-      const useServerless = import.meta.env.VITE_USE_SERVERLESS === 'true'
-      if (useServerless) {
-        // Post to our serverless endpoint which uses a Supabase service key
-        const apiUrl = '/api/enquiries'
-        fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(saved) })
-          .catch((err) => console.warn('Serverless forward failed', err))
-      } else if (isSupabaseConfigured()) {
+      if (isSupabaseConfigured()) {
         try {
           sendToSupabase(saved).catch((err) => console.warn('Supabase send failed', err));
         } catch (err) {
