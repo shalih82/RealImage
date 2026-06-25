@@ -1,0 +1,11 @@
+{
+  "buildCommand": "cd agents/output/app && npm install && npm run build",
+  "outputDirectory": "agents/output/app/dist",
+  "framework": "vite",
+  "apiVersion": 3,
+  "functions": {
+    "agents/output/app/api/**/*.ts": {
+      "runtime": "nodejs20.x"
+    }
+  }
+}
