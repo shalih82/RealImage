@@ -47,6 +47,7 @@ const PRESET_ICONS: { label: string; path: string }[] = [
 
 const emptyService: ServiceItem = {
   icon: PRESET_ICONS[0].path,
+  image: '',
   title: '',
   tag: '',
   description: '',
@@ -111,6 +112,7 @@ export default function ServiceEditModal({ isOpen, onClose, onSave, initialData,
       title: formData.title.trim(),
       tag: formData.tag.trim(),
       description: formData.description.trim(),
+      image: formData.image?.trim() || undefined,
       features: featuresText
         .split(',')
         .map((f) => f.trim())
@@ -299,6 +301,41 @@ export default function ServiceEditModal({ isOpen, onClose, onSave, initialData,
               onChange={(e) => setFormData((p) => ({ ...p, description: e.target.value }))}
               placeholder="Describe the service offering..."
             />
+          </div>
+
+          {/* Image URL */}
+          <div>
+            <label className="font-sans-body" style={labelStyle}>
+              Image URL
+            </label>
+            <input
+              className="font-sans-body svc-input"
+              style={inputStyle}
+              value={formData.image || ''}
+              onChange={(e) => setFormData((p) => ({ ...p, image: e.target.value }))}
+              placeholder="e.g. /images/project-7.jfif"
+            />
+            {formData.image ? (
+              <div
+                style={{
+                  marginTop: '12px',
+                  borderRadius: '14px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  maxHeight: '160px',
+                }}
+              >
+                <img
+                  src={formData.image}
+                  alt="Service preview"
+                  style={{
+                    width: '100%',
+                    display: 'block',
+                    objectFit: 'cover',
+                  }}
+                />
+              </div>
+            ) : null}
           </div>
 
           {/* Features */}
