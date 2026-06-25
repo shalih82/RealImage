@@ -453,68 +453,6 @@ export default function AboutPage({ onBack: _onBack }: Props) {
   );
 }
 
-function ImageCard({ src, alt, caption }: { src: string; alt: string; caption: string }) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        position: 'relative',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        aspectRatio: '4/3',
-        border: '1px solid rgba(255,255,255,0.06)',
-        cursor: 'default',
-      }}
-    >
-      <img
-        src={src}
-        alt={alt}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block',
-          transition: 'transform 0.6s cubic-bezier(0.16,1,0.3,1)',
-          transform: hovered ? 'scale(1.05)' : 'scale(1)',
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to top, rgba(6,20,31,0.75) 0%, transparent 50%)',
-          opacity: hovered ? 1 : 0.6,
-          transition: 'opacity 0.4s ease',
-          pointerEvents: 'none',
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '20px',
-          left: '20px',
-        }}
-      >
-        <span
-          className="font-sans-body"
-          style={{
-            fontSize: '11px',
-            letterSpacing: '0.25em',
-            color: hovered ? '#5BA4B5' : 'rgba(214,232,238,0.6)',
-            textTransform: 'uppercase',
-            transition: 'color 0.4s ease',
-          }}
-        >
-          {caption}
-        </span>
-      </div>
-    </div>
-  );
-}
-
 function ContentBlock({
   title,
   body,
