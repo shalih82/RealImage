@@ -200,7 +200,7 @@ export const galleryConfig: GalleryConfig = {
       id: "pre-wedding",
       title: "Pre-Wedding",
       year: "2024",
-      image: "images/project-1.jpg",
+      image: "/images/project-1.jpg",
       subtitle: "A golden hour romance in the wildflower fields of Rajasthan.",
       meta: [
         { label: "TYPE", value: "Pre-Wedding Photography" },
@@ -217,7 +217,7 @@ export const galleryConfig: GalleryConfig = {
       id: "traditional",
       title: "Traditional",
       year: "2024",
-      image: "images/project-2.jpg",
+      image: "/images/project-2.jpg",
       subtitle: "Sacred rituals beneath the ornate mandap by candlelight.",
       meta: [
         { label: "TYPE", value: "Traditional Wedding" },
@@ -234,7 +234,7 @@ export const galleryConfig: GalleryConfig = {
       id: "candid",
       title: "Candid",
       year: "2010",
-      image: "images/project-3.jpg",
+      image: "/images/project-3.jpg",
       subtitle: "Genuine laughter and joy in natural window light.",
       meta: [
         { label: "TYPE", value: "Candid Wedding" },
@@ -251,7 +251,7 @@ export const galleryConfig: GalleryConfig = {
       id: "post-wedding",
       title: "Post-Wedding",
       year: "2010",
-      image: "images/project-4.jpg",
+      image: "/images/project-4.jpg",
       subtitle: "A dreamy silhouette against the golden Maldivian sunset.",
       meta: [
         { label: "TYPE", value: "Post-Wedding Photography" },
@@ -268,7 +268,7 @@ export const galleryConfig: GalleryConfig = {
       id: "engagement",
       title: "Engagement",
       year: "2024",
-      image: "images/project-5.jfif",
+      image: "/images/project-5.jfif",
       subtitle: "A sparkling ring ceremony amid white and gold florals.",
       meta: [
         { label: "TYPE", value: "Engagement Ceremony" },
@@ -285,7 +285,7 @@ export const galleryConfig: GalleryConfig = {
       id: "haldi",
       title: "Haldi",
       year: "2023",
-      image: "images/project-6.jfif",
+      image: "/images/project-6.jfif",
       subtitle: "Vibrant turmeric celebrations under a sunlit canopy.",
       meta: [
         { label: "TYPE", value: "Haldi Ceremony" },
@@ -302,7 +302,7 @@ export const galleryConfig: GalleryConfig = {
       id: "reception",
       title: "Reception",
       year: "2024",
-      image: "images/project-7.jfif",
+      image: "/images/project-7.jfif",
       subtitle: "A grand ballroom celebration under crystal chandeliers.",
       meta: [
         { label: "TYPE", value: "Wedding Reception" },
@@ -319,7 +319,7 @@ export const galleryConfig: GalleryConfig = {
       id: "destination",
       title: "Destination",
       year: "2023",
-      image: "images/project-8.jfif",
+      image: "/images/project-8.jfif",
       subtitle: "An intimate mountain ceremony amid misty green valleys.",
       meta: [
         { label: "TYPE", value: "Destination Wedding" },
@@ -432,7 +432,7 @@ export const aboutPageConfig: AboutPageConfig = {
     { number: "500+", label: "Happy Clients" },
     { number: "1000+", label: "Events Captured" },
   ],
-  heroImage: "images/project-10.jfif",
+  heroImage: "/images/project-10.jfif",
   heroImageAlt: "RealImage Photography - Golden hour shoot",
   quote: "Every frame we capture is a piece of your story",
   quoteCaption: "Capturing Moments.",
@@ -469,7 +469,7 @@ export const servicesPageConfig: ServicesPageConfig = {
       tag: "Photography",
       description: "Artistic pre-wedding sessions in scenic locations around India and abroad. We create story-driven imagery that captures your unique chemistry before the big day — combining candid spontaneity with deliberate, editorial composition.",
       features: ["1–2 Day Session", "Multiple Looks", "Location Scouting", "Edited Gallery"],
-      image: "images/project-7.jfif",
+      image: "/images/project-7.jfif",
     },
     {
       icon: "M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.585 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.989-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316zM16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z",
@@ -477,7 +477,7 @@ export const servicesPageConfig: ServicesPageConfig = {
       tag: "Photography + Film",
       description: "Full-day documentary coverage of your wedding rituals, ceremonies, and candid moments. Two skilled photographers ensure no moment is missed — from the morning preparations to the final farewell.",
       features: ["Full Day Coverage", "2 Photographers", "All Rituals", "Same-Day Preview"],
-      image: "images/project-2.jpg",
+      image: "/images/project-2.jpg",
     },
     {
       icon: "M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z",
@@ -485,7 +485,7 @@ export const servicesPageConfig: ServicesPageConfig = {
       tag: "Videography",
       description: "Feature-length cinematic films that go beyond the highlight reel. Using cinema-grade cameras, colour grading, and narrative editing, we transform your wedding day into a timeless visual story.",
       features: ["Cinematic Grade", "Drone Footage", "Feature Length", "Trailer Cut"],
-      image: "images/project-3.jpg",
+      image: "/images/project-3.jpg",
     },
     {
       icon: "M15 10.5a3 3 0 11-6 0 3 3 0 016 0zM19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z",
@@ -493,7 +493,7 @@ export const servicesPageConfig: ServicesPageConfig = {
       tag: "Photography",
       description: "Romantic post-wedding shoots at dream destinations — Maldives, Bali, Europe, or anywhere your heart desires. These extended sessions allow complete creative freedom, producing fine-art imagery.",
       features: ["Destination Travel", "Fine Art Style", "Extended Duration", "Prints Included"],
-      image: "images/project-4.jpg",
+      image: "/images/project-4.jpg",
     },
     {
       icon: "M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25",
@@ -501,7 +501,7 @@ export const servicesPageConfig: ServicesPageConfig = {
       tag: "Products",
       description: "Handcrafted, archival-quality wedding albums and fine art prints. Each album is a bespoke design, printed on museum-grade paper, and bound to last a lifetime and be cherished for generations.",
       features: ["Italian Binding", "Archival Prints", "Bespoke Design", "Lifetime Guarantee"],
-      image: "images/project-11.jpg",
+      image: "/images/project-11.jpg",
     },
     {
       icon: "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z",
@@ -509,7 +509,7 @@ export const servicesPageConfig: ServicesPageConfig = {
       tag: "Photography",
       description: "Vibrant photography for birthdays, anniversaries, engagements, and corporate events. We bring the same artistic energy to every celebration, ensuring every milestone is beautifully preserved.",
       features: ["Half/Full Day", "Candid Style", "Quick Delivery", "Online Gallery"],
-      image: "images/project-12.jfif",
+      image: "/images/project-12.jfif",
     },
   ],
   cta: {
