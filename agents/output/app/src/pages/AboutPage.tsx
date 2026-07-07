@@ -1,11 +1,42 @@
 import { useEffect, useRef, useState } from 'react';
+import { aboutPageConfig, type AboutPageConfig } from '../config';
+import { useAdmin } from '../hooks/useAdmin';
 
 interface Props {
   onBack: () => void;
 }
 
+const STORAGE_KEY = 'ri_about_page_data';
+
+const DEFAULT_STORY_BLOCK_ICON = 'M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21zM16.5 8.25a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0z';
+
+function cloneAboutPageConfig(config: AboutPageConfig): AboutPageConfig {
+  return {
+    ...config,
+    stats: config.stats.map((stat) => ({ ...stat })),
+    blocks: config.blocks.map((block) => ({ ...block })),
+  };
+}
+
+function loadAboutPageConfig(): AboutPageConfig {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored) as AboutPageConfig;
+      if (parsed && parsed.title) return cloneAboutPageConfig(parsed);
+    }
+  } catch {
+    // fall back to defaults
+  }
+  return cloneAboutPageConfig(aboutPageConfig);
+}
+
 export default function AboutPage({ onBack: _onBack }: Props) {
+  const { isAdmin } = useAdmin();
   const [visible, setVisible] = useState(false);
+  const [content, setContent] = useState<AboutPageConfig>(loadAboutPageConfig);
+  const [showEditor, setShowEditor] = useState(false);
+  const [draft, setDraft] = useState<AboutPageConfig>(cloneAboutPageConfig(aboutPageConfig));
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -13,6 +44,41 @@ export default function AboutPage({ onBack: _onBack }: Props) {
       requestAnimationFrame(() => setVisible(true));
     });
   }, []);
+
+  const openEditor = () => {
+    setDraft(cloneAboutPageConfig(content));
+    setShowEditor(true);
+  };
+
+  const saveContent = () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+    setContent(cloneAboutPageConfig(draft));
+    setShowEditor(false);
+  };
+
+  const resetContent = () => {
+    const defaults = cloneAboutPageConfig(aboutPageConfig);
+    setDraft(defaults);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaults));
+    setContent(defaults);
+  };
+
+  const addStoryBlock = () => {
+    setDraft((prev) => ({
+      ...prev,
+      blocks: [
+        ...prev.blocks,
+        { title: 'New Story Block', body: '', icon: DEFAULT_STORY_BLOCK_ICON },
+      ],
+    }));
+  };
+
+  const removeStoryBlock = (index: number) => {
+    setDraft((prev) => ({
+      ...prev,
+      blocks: prev.blocks.filter((_, itemIndex) => itemIndex !== index),
+    }));
+  };
 
   return (
     <div
@@ -26,6 +92,135 @@ export default function AboutPage({ onBack: _onBack }: Props) {
         overflow: 'hidden',
       }}
     >
+      {isAdmin && (
+        <button
+          type="button"
+          onClick={openEditor}
+          className="font-sans-body"
+          style={{
+            position: 'fixed',
+            top: '88px',
+            right: '24px',
+            zIndex: 200,
+            padding: '10px 16px',
+            borderRadius: '999px',
+            border: '1px solid rgba(91,164,181,0.35)',
+            background: 'rgba(6,20,31,0.8)',
+            color: '#D6E8EE',
+            fontSize: '11px',
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            cursor: 'pointer',
+            backdropFilter: 'blur(10px)',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+          }}
+        >
+          Edit About Page
+        </button>
+      )}
+
+      {showEditor && (
+        <div
+          data-lenis-prevent
+          onClick={(e) => e.target === e.currentTarget && setShowEditor(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 1000,
+            background: 'rgba(2,7,12,0.9)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px',
+          }}
+        >
+          <div
+            data-lenis-prevent
+            style={{
+              width: '100%',
+              maxWidth: '780px',
+              maxHeight: '92vh',
+              overflowY: 'auto',
+              background: 'rgba(6,20,31,0.96)',
+              border: '1px solid rgba(91,164,181,0.24)',
+              borderRadius: '22px',
+              padding: '24px',
+              color: '#D6E8EE',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.45)',
+              overscrollBehavior: 'contain',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <div>
+                <h2 className="font-serif-display" style={{ margin: 0, fontSize: '24px', fontWeight: 200 }}>Edit About Page</h2>
+                <p className="font-sans-body" style={{ margin: '6px 0 0', fontSize: '12px', color: 'rgba(214,232,238,0.45)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Update the story sections and highlights</p>
+              </div>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button type="button" onClick={resetContent} style={{ ...editorButtonStyle, borderColor: 'rgba(239,191,4,0.35)', color: '#EFBF04' }}>Reset</button>
+                <button type="button" onClick={() => setShowEditor(false)} style={{ ...editorButtonStyle, borderColor: 'rgba(255,255,255,0.16)', color: 'rgba(214,232,238,0.75)' }}>Cancel</button>
+                <button type="button" onClick={saveContent} style={{ ...editorButtonStyle, borderColor: 'rgba(91,164,181,0.4)', color: '#5BA4B5' }}>Save</button>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gap: '16px' }}>
+              <EditorField label="Eyebrow" value={draft.eyebrow} onChange={(value) => setDraft((prev) => ({ ...prev, eyebrow: value }))} />
+              <EditorField label="Title" value={draft.title} onChange={(value) => setDraft((prev) => ({ ...prev, title: value }))} />
+              <EditorField label="Intro line" value={draft.intro} onChange={(value) => setDraft((prev) => ({ ...prev, intro: value }))} textarea />
+              <EditorField label="Main body" value={draft.body} onChange={(value) => setDraft((prev) => ({ ...prev, body: value }))} textarea />
+              <EditorField label="Location badge" value={draft.location} onChange={(value) => setDraft((prev) => ({ ...prev, location: value }))} />
+              <EditorField label="Hero image" value={draft.heroImage} onChange={(value) => setDraft((prev) => ({ ...prev, heroImage: value }))} />
+              <EditorField label="Hero image alt" value={draft.heroImageAlt} onChange={(value) => setDraft((prev) => ({ ...prev, heroImageAlt: value }))} />
+              <EditorField label="Featured image" value={draft.featuredImage} onChange={(value) => setDraft((prev) => ({ ...prev, featuredImage: value }))} />
+              <EditorField label="Featured image alt" value={draft.featuredImageAlt} onChange={(value) => setDraft((prev) => ({ ...prev, featuredImageAlt: value }))} />
+              <EditorField label="Quote" value={draft.quote} onChange={(value) => setDraft((prev) => ({ ...prev, quote: value }))} />
+              <EditorField label="Quote caption" value={draft.quoteCaption} onChange={(value) => setDraft((prev) => ({ ...prev, quoteCaption: value }))} />
+              <EditorField label="Closing text" value={draft.closingText} onChange={(value) => setDraft((prev) => ({ ...prev, closingText: value }))} textarea />
+
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+                <h3 className="font-sans-body" style={{ margin: '0 0 12px', textTransform: 'uppercase', letterSpacing: '0.2em', fontSize: '11px', color: 'rgba(214,232,238,0.45)' }}>Stats</h3>
+                <div style={{ display: 'grid', gap: '12px' }}>
+                  {draft.stats.map((stat, index) => (
+                    <div key={index} style={{ display: 'grid', gap: '8px', gridTemplateColumns: '1fr 2fr' }}>
+                      <EditorField label="Number" value={stat.number} onChange={(value) => setDraft((prev) => ({ ...prev, stats: prev.stats.map((item, itemIndex) => itemIndex === index ? { ...item, number: value } : item) }))} />
+                      <EditorField label="Label" value={stat.label} onChange={(value) => setDraft((prev) => ({ ...prev, stats: prev.stats.map((item, itemIndex) => itemIndex === index ? { ...item, label: value } : item) }))} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px', marginBottom: '12px' }}>
+                  <h3 className="font-sans-body" style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '0.2em', fontSize: '11px', color: 'rgba(214,232,238,0.45)' }}>Story blocks</h3>
+                  <button type="button" onClick={addStoryBlock} style={{ ...editorButtonStyle, borderColor: 'rgba(91,164,181,0.4)', color: '#5BA4B5' }}>Add Block</button>
+                </div>
+                <div style={{ display: 'grid', gap: '12px' }}>
+                  {draft.blocks.map((block, index) => (
+                    <div key={index} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '14px', padding: '14px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                        <span className="font-sans-body" style={{ fontSize: '11px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(214,232,238,0.45)' }}>Block {index + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => removeStoryBlock(index)}
+                          style={{
+                            ...editorButtonStyle,
+                            borderColor: 'rgba(255,80,80,0.3)',
+                            color: 'rgba(255,120,120,0.9)',
+                          }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      <EditorField label="Title" value={block.title} onChange={(value) => setDraft((prev) => ({ ...prev, blocks: prev.blocks.map((item, itemIndex) => itemIndex === index ? { ...item, title: value } : item) }))} />
+                      <EditorField label="Body" value={block.body} onChange={(value) => setDraft((prev) => ({ ...prev, blocks: prev.blocks.map((item, itemIndex) => itemIndex === index ? { ...item, body: value } : item) }))} textarea />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Decorative gradient orbs */}
       <div
         style={{
@@ -134,7 +329,7 @@ export default function AboutPage({ onBack: _onBack }: Props) {
               marginBottom: '28px',
             }}
           >
-            ABOUT US
+            {content.eyebrow}
           </p>
           <h1
             className="font-serif-display"
@@ -151,7 +346,7 @@ export default function AboutPage({ onBack: _onBack }: Props) {
               backgroundClip: 'text',
             }}
           >
-            Our Story
+            {content.title}
           </h1>
           <p
             className="font-sans-body"
@@ -163,7 +358,7 @@ export default function AboutPage({ onBack: _onBack }: Props) {
               fontWeight: 300,
             }}
           >
-            A legacy of creative photography, built on passion and trust.
+            {content.intro}
           </p>
           <p
             className="font-sans-body"
@@ -176,10 +371,7 @@ export default function AboutPage({ onBack: _onBack }: Props) {
               maxWidth: '820px',
             }}
           >
-            For over 15 years, RealImage Photography has been capturing life's most meaningful
-            moments through creative and professional photography. What started as a passion for
-            storytelling through images has grown into a trusted photography business dedicated to
-            delivering memories that last a lifetime.
+            {content.body}
           </p>
           
           <div style={{ marginTop: '48px' }}>
@@ -198,7 +390,7 @@ export default function AboutPage({ onBack: _onBack }: Props) {
                 backdropFilter: 'blur(4px)',
               }}
             >
-              Since 2010 · Madurai, India
+              {content.location}
             </span>
           </div>
         </div>
@@ -217,11 +409,7 @@ export default function AboutPage({ onBack: _onBack }: Props) {
           transition: 'opacity 1s ease 0.3s, transform 1s ease 0.3s',
         }}
       >
-        {[
-          { number: '15+', label: 'Years of Experience' },
-          { number: '500+', label: 'Happy Clients' },
-          { number: '1000+', label: 'Events Captured' },
-        ].map((stat, i) => (
+        {content.stats.map((stat, i) => (
           <div
             key={i}
             style={{
@@ -270,23 +458,7 @@ export default function AboutPage({ onBack: _onBack }: Props) {
       >
 
         {/* Content blocks */}
-        {[
-          {
-            title: 'Our Philosophy',
-            body: "We believe every photograph should tell a story. Whether it's a wedding, family celebration, corporate event, portrait session, or special occasion, our goal is to capture genuine emotions, natural moments, and unforgettable experiences with attention to detail and artistic vision.",
-            icon: 'M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21zM16.5 8.25a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0z',
-          },
-          {
-            title: 'Trust & Experience',
-            body: 'Over the years, we have had the privilege of working with hundreds of clients, helping them preserve their most cherished memories. Our commitment to quality, professionalism, and customer satisfaction has earned us the trust of families, individuals, and businesses alike.',
-            icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z',
-          },
-          {
-            title: 'Our Approach',
-            body: 'At RealImage Photography, we combine experience, creativity, and modern photography techniques to create images that you will treasure for years to come.',
-            icon: 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z',
-          },
-        ].map((block, i) => (
+        {content.blocks.map((block, i) => (
           <ContentBlock key={i} {...block} index={i} />
         ))}
       </div>
@@ -317,8 +489,8 @@ export default function AboutPage({ onBack: _onBack }: Props) {
           }}
         >
           <img
-            src="images/project-4.jpg"
-            alt="RealImage Photography - Destination shoot"
+            src={content.featuredImage}
+            alt={content.featuredImageAlt}
             style={{
               width: '100%',
               height: '100%',
@@ -366,7 +538,7 @@ export default function AboutPage({ onBack: _onBack }: Props) {
               textShadow: '0 4px 30px rgba(0,0,0,0.9), 0 2px 10px rgba(0,0,0,0.8)',
             }}
           >
-            "Every frame we capture is a piece of your story"
+            {content.quote}
           </p>
 
           <div
@@ -391,7 +563,7 @@ export default function AboutPage({ onBack: _onBack }: Props) {
                 textShadow: '0 4px 20px rgba(0,0,0,0.9), 0 2px 10px rgba(0,0,0,0.8)',
               }}
             >
-              Capturing Moments.
+              {content.quoteCaption}
             </p>
             <p
               className="font-serif-display"
@@ -445,13 +617,75 @@ export default function AboutPage({ onBack: _onBack }: Props) {
             fontWeight: 300,
           }}
         >
-          Thank you for allowing us to be a part of your special journey. We look forward to
-          capturing your next unforgettable moment.
+          {content.closingText}
         </p>
       </div>
     </div>
   );
 }
+
+function EditorField({
+  label,
+  value,
+  onChange,
+  textarea = false,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  textarea?: boolean;
+}) {
+  return (
+    <label style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <span className="font-sans-body" style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(214,232,238,0.45)' }}>
+        {label}
+      </span>
+      {textarea ? (
+        <textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="font-sans-body"
+          style={{
+            minHeight: '90px',
+            resize: 'vertical',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '10px',
+            padding: '10px 12px',
+            color: '#D6E8EE',
+            outline: 'none',
+          }}
+        />
+      ) : (
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="font-sans-body"
+          style={{
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '10px',
+            padding: '10px 12px',
+            color: '#D6E8EE',
+            outline: 'none',
+          }}
+        />
+      )}
+    </label>
+  );
+}
+
+const editorButtonStyle: React.CSSProperties = {
+  background: 'transparent',
+  border: '1px solid rgba(255,255,255,0.12)',
+  borderRadius: '999px',
+  color: '#D6E8EE',
+  padding: '8px 12px',
+  cursor: 'pointer',
+  fontSize: '11px',
+  letterSpacing: '0.18em',
+  textTransform: 'uppercase',
+};
 
 function ContentBlock({
   title,

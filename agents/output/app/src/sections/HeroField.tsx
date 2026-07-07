@@ -74,6 +74,7 @@ export default function HeroField({ onNavigateToGallery }: HeroFieldProps = {}) 
         overflow: 'hidden',
       }}
     >
+
       {/* ── Floating Photo Thumbnails — Left Side ── */}
       {leftThumbs.map((thumb, i) => (
         <div
@@ -448,49 +449,7 @@ export default function HeroField({ onNavigateToGallery }: HeroFieldProps = {}) 
         )}
       </div>
 
-      {/* ── Scroll Indicator ── */}
-      <div
-        className="scroll-indicator"
-        style={{
-          position: 'absolute',
-          bottom: '30px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 5,
-        }}
-        onClick={() => {
-          document
-            .getElementById('philosophy')
-            ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }}
-      >
-        <div className="scroll-chevrons">
-          <svg
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
-            fill="none"
-            stroke="rgba(237,232,228,0.4)"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M19.5 5.25l-7.5 7.5-7.5-7.5" />
-            <path d="M19.5 11.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </div>
-        <span
-          className="font-sans-body"
-          style={{
-            fontSize: '11px',
-            letterSpacing: '0.2em',
-            color: 'rgba(214,232,238,0.35)',
-            textTransform: 'uppercase',
-          }}
-        >
-          Learn More
-        </span>
-      </div>
+
     </section>
   );
 }

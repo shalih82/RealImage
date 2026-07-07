@@ -92,6 +92,29 @@ export interface ServiceItem {
   startingPrice?: string
 }
 
+export interface AboutPageBlock {
+  title: string
+  body: string
+  icon: string
+}
+
+export interface AboutPageConfig {
+  eyebrow: string
+  title: string
+  intro: string
+  body: string
+  location: string
+  stats: Array<{ number: string; label: string }>
+  heroImage: string
+  heroImageAlt: string
+  quote: string
+  quoteCaption: string
+  closingText: string
+  blocks: AboutPageBlock[]
+  featuredImage: string
+  featuredImageAlt: string
+}
+
 export interface ServicesPageConfig {
   eyebrow: string
   title: string
@@ -396,6 +419,43 @@ export const footerConfig: FooterConfig = {
 
 export const projectDetailConfig: ProjectDetailConfig = {
   backLabel: "← Back",
+}
+
+export const aboutPageConfig: AboutPageConfig = {
+  eyebrow: "ABOUT US",
+  title: "Our Story",
+  intro: "A legacy of creative photography, built on passion and trust.",
+  body: "For over 15 years, RealImage Photography has been capturing life's most meaningful moments through creative and professional photography. What started as a passion for storytelling through images has grown into a trusted photography business dedicated to delivering memories that last a lifetime.",
+  location: "Since 2010 · Madurai, India",
+  stats: [
+    { number: "15+", label: "Years of Experience" },
+    { number: "500+", label: "Happy Clients" },
+    { number: "1000+", label: "Events Captured" },
+  ],
+  heroImage: "images/project-10.jfif",
+  heroImageAlt: "RealImage Photography - Golden hour shoot",
+  quote: "Every frame we capture is a piece of your story",
+  quoteCaption: "Capturing Moments.",
+  closingText: "Thank you for allowing us to be a part of your special journey. We look forward to capturing your next unforgettable moment.",
+  blocks: [
+    {
+      title: "Our Philosophy",
+      body: "We believe every photograph should tell a story. Whether it's a wedding, family celebration, corporate event, portrait session, or special occasion, our goal is to capture genuine emotions, natural moments, and unforgettable experiences with attention to detail and artistic vision.",
+      icon: "M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21zM16.5 8.25a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0z",
+    },
+    {
+      title: "Trust & Experience",
+      body: "Over the years, we have had the privilege of working with hundreds of clients, helping them preserve their most cherished memories. Our commitment to quality, professionalism, and customer satisfaction has earned us the trust of families, individuals, and businesses alike.",
+      icon: "M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z",
+    },
+    {
+      title: "Our Approach",
+      body: "At RealImage Photography, we combine experience, creativity, and modern photography techniques to create images that you will treasure for years to come.",
+      icon: "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z",
+    },
+  ],
+  featuredImage: "images/project-4.jpg",
+  featuredImageAlt: "RealImage Photography - Destination shoot",
 }
 
 export const servicesPageConfig: ServicesPageConfig = {

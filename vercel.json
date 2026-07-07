@@ -1,6 +1,8 @@
 {
+  "version": 3,
   "rootDirectory": "agents/output/app",
-  "buildCommand": "npm install && npm run build",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
   "functions": {
